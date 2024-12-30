@@ -11,6 +11,8 @@ public interface IUsers {
     Users.Vo getById(long id);
 
     // loginId로 유저 찾기
-    Optional<Users.Vo> findByLoginId(long id);
-    Users.Vo getByLoginId(long id);
+    Optional<Users.Vo> findByLoginId(String loginId);
+    Users.Vo getByLoginId(String loginId);
+
+    Users.Vo changeName(long id, String newName);
 }

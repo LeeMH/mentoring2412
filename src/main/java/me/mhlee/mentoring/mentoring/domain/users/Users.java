@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import me.mhlee.mentoring.mentoring.domain.point.Point;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 

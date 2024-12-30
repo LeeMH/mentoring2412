@@ -28,12 +28,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
-	annotationProcessor('org.projectlombok:lombok') // 추가
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
-	// QueryDSL Implementation
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
@@ -44,24 +42,26 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-/**
- * QueryDSL Build Options
- */
+tasks.withType(Test) {
+	useJUnitPlatform()
+}
+
 def querydslDir = "$buildDir/generated/querydsl"
 
 sourceSets {
-	main.java.srcDirs += [ querydslDir ]
+	main {
+		java {
+			srcDirs += querydslDir
+		}
+	}
 }
 
 tasks.withType(JavaCompile) {
 	options.generatedSourceOutputDirectory = file(querydslDir)
-
-	// 위의 설정이 안되면 아래 설정 사용
-	// options.generatedSourceOutputDirectory.set(file(querydslDir))
 }
 
-clean {
+tasks.named('clean') {
 	doLast {
-		file(querydslDir).deleteDir()
+		file(querydslDir).deleteRecursively()
 	}
 }

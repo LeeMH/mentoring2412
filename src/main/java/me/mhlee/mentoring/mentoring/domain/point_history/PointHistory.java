@@ -64,6 +64,7 @@ public class PointHistory {
     public enum PointType {
         CREATED("생성"),
         WELCOME("가입축하"),
+        BONUS("보너스"),
         ;
 
         private String desc;
